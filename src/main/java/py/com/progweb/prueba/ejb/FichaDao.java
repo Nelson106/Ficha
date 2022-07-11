@@ -93,7 +93,7 @@ public class FichaDao {
     }
      
      
-      public List<Detalle> ListarDetallesPorFecha(Date fecha) {
+      public List<Detalle> ListarDetallesPorFecha(String fecha) {
           
         Query q = this.em.createQuery("select d from Detalle d where d.fecha =:fecha")
                 .setParameter("fecha",fecha);
@@ -172,6 +172,31 @@ public class FichaDao {
         return (List<Detalle>) q.getResultList();
     }
     
+     public List<Detalle> GetMedicoPorFecha(String fecha) {
+        Query q = this.em.createQuery("select d from Detalle d where d.fecha =:fecha")
+                .setParameter("fecha", fecha);
+       
+        return (List<Detalle>) q.getResultList();
+    }
+     
+    public List<Detalle> GetPacientePorFecha(int medicoId,String fecha) {
+        Query q = this.em.createQuery("select d from Detalle d where d.fecha =:fecha and d.medico.id=:medicoId")
+                .setParameter("medicoId", medicoId)
+                .setParameter("fecha", fecha);
+       
+        return (List<Detalle>) q.getResultList();
+    }
+    public List<Detalle> GetDetallePorFecha(int medicoId,String fecha, int pacienteId) {
+        Query q = this.em.createQuery("select d from Detalle d where d.fecha =:fecha and d.medico.id=:medicoId and d.ficha.paciente.id=:pacienteId")
+                .setParameter("medicoId", medicoId)
+                .setParameter("fecha", fecha)
+                .setParameter("pacienteId", pacienteId);
+       
+        return (List<Detalle>) q.getResultList();
+    }
+    
+    
+    
     public List<Ficha> GetFichaPorPacienteIdEspecialidad(int id,String especialidad) {
         Query q = this.em.createQuery("select d from Detalle d where d.ficha.paciente.id =:id and d.medico.especialidad=:especialidad")
                 .setParameter("id", id)
@@ -194,6 +219,15 @@ public class FichaDao {
                 .setParameter("cedula", cedula)
                 .setParameter("id",id);
        
+        return (List<Ficha>) q.getResultList();
+    }
+     
+     
+     public List<Ficha> GetFichaPorTexto(String texto) {
+        
+        Query q = this.em.createQuery("select d from Detalle d where d.motivo like :texto or d.diagnostico like :texto or d.tratamiento like :texto  ")
+                .setParameter("texto", "%"+texto+"%");
+                
         return (List<Ficha>) q.getResultList();
     }
     

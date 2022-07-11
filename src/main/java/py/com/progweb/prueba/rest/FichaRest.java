@@ -83,11 +83,33 @@ public class FichaRest {
     
     
     @POST
-    @Path("/detalleFecha")
-    public Response ListarDetallesPorFecha( Detalle detalle) {
+    @Path("/medicoFecha")
+    public Response GetMedicoPorFecha( Detalle detalle) {
            
         return Response.ok(fichaDao.ListarDetallesPorFecha(detalle.getFecha())).build();
     }
+    @POST
+    @Path("/pacienteFecha")
+    public Response GetPacientePorFecha( Detalle detalle) {
+           
+        return Response.ok(fichaDao.GetPacientePorFecha(detalle.getId(),detalle.getFecha())).build();
+    }
+    
+    @POST
+    @Path("/detallesFecha")
+    public Response GetDetallePorFecha( Detalle detalle) {
+           
+        return Response.ok(fichaDao.GetDetallePorFecha(detalle.getId(),detalle.getFecha(),detalle.getFicha().getId())).build();
+    }
+    
+    @POST
+    @Path("/texto")
+    public Response  GetFichaPorTexto( Detalle detalle) {
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+detalle.getDiagnostico());
+        return Response.ok(fichaDao.GetFichaPorTexto(detalle.getDiagnostico())).build();
+    }
+    
+    
     
     @GET
     @Path("/fichaMedico/{medicoId}")
@@ -182,6 +204,9 @@ public class FichaRest {
          
         return Response.ok(fichaDao.GetFichaPorPacienteCedulaMedicoId(paciente.getCedula(),paciente.getId())).build();
     }
+    
+    
+    
     
     @POST
     @Path("/medicoId")

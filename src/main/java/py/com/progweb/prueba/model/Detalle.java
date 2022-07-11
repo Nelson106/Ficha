@@ -36,14 +36,14 @@ public class Detalle {
     private String tratamiento;
     
     @Column(name="fecha")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fecha;
+    
+    private String fecha;
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
     
